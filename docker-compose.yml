@@ -1,0 +1,20 @@
+services:
+  orbit:
+    image: runonflux/orbit:latest
+    container_name: nuxt-orbit-test
+    environment:
+      # Orbit/Deploy-with-git variables
+      - GIT_REPO_URL=file:///app
+      - GIT_REPO_BRANCH=main
+      - APP_PORT=3000
+      - NODE_VERSION=20.x
+      - INSTALL_COMMAND=pnpm install --shamefully-hoist
+      - BUILD_COMMAND=pnpm run build
+      - RUN_COMMAND=node .output/server/index.mjs
+      - DEBUG=true
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    restart: unless-stopped
